@@ -269,7 +269,10 @@
                         calculate();
                     }
                 })
-                .catch(error => console.error('Error loading initial data:', error));
+                .catch(error => {
+                    console.error('Error loading initial data:', error);
+                    alert('เกิดข้อผิดพลาดในการโหลดข้อมูล กรุณารีเฟรชหน้าเว็บ');
+                });
         }
 
         // เพิ่มอาหาร
@@ -358,6 +361,41 @@
             });
         }
 
+        // ลบอาหาร
+        function deleteFood(foodId) {
+            if (!confirm('ยืนยันการลบรายการอาหารนี้หรือไม่?')) {
+                return;
+            }
+            
+            fetch(`/delete_food/${foodId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw err; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    // ลบอาหารออกจากรายการ
+                    foods = foods.filter(f => f.id !== foodId);
+                    updateFoodList();
+                    updateFoodSelection();
+                    calculate();
+                } else {
+                    alert(data.error || 'เกิดข้อผิดพลาดในการลบ');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(error.error || 'เกิดข้อผิดพลาดในการเชื่อมต่อ');
+            });
+        }
+
         // อัปเดตรายการอาหาร
         function updateFoodList() {
             const foodList = document.getElementById('foodList');
@@ -368,15 +406,25 @@
                 return;
             }
             
+            const listGroup = document.createElement('div');
+            listGroup.className = 'list-group';
+            
             foods.forEach(food => {
-                const foodItem = document.createElement('div');
-                foodItem.className = 'food-item';
-                foodItem.innerHTML = `
-                    <strong>${food.name}</strong>
-                    <span class="float-end">${food.price.toFixed(2)} บาท</span>
+                const listItem = document.createElement('div');
+                listItem.className = 'list-group-item d-flex justify-content-between align-items-center';
+                listItem.innerHTML = `
+                    <div>
+                        <span class="me-2">${food.name}</span>
+                        <small class="text-muted">${parseFloat(food.price).toFixed(2)} บาท</small>
+                    </div>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteFood('${food.id}')">
+                        <i class="bi bi-trash"></i>
+                    </button>
                 `;
-                foodList.appendChild(foodItem);
+                listGroup.appendChild(listItem);
             });
+            
+            foodList.appendChild(listGroup);
         }
 
         // ลบคน

@@ -175,6 +175,26 @@ def delete_person(person_id):
         db.session.rollback()
         return jsonify({'success': False, 'error': str(e)}), 500
 
+@app.route('/delete_food/<food_id>', methods=['DELETE'])
+def delete_food(food_id):
+    try:
+        # ตรวจสอบว่ามีอาหารนี้ในระบบหรือไม่
+        food = Food.query.get(food_id)
+        if not food:
+            return jsonify({'success': False, 'error': 'ไม่พบรายการอาหาร'}), 404
+        
+        # ลบรายการอาหารที่เกี่ยวข้อง
+        PersonFood.query.filter_by(food_id=food_id).delete()
+        
+        # ลบอาหารออกจากฐานข้อมูล
+        db.session.delete(food)
+        db.session.commit()
+        
+        return jsonify({'success': True})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'success': False, 'error': str(e)}), 500
+
 @app.route('/calculate', methods=['GET'])
 def calculate():
     try:
