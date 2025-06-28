@@ -5,35 +5,174 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>แอปหารค่าอาหาร</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <style>
+        :root {
+            --primary-color: #4e73df;
+            --secondary-color: #858796;
+            --success-color: #1cc88a;
+            --light-color: #f8f9fc;
+            --dark-color: #5a5c69;
+        }
+        
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
-            padding: 20px;
+            padding: 15px;
             font-family: 'Kanit', sans-serif;
+            background-color: #f8f9fc;
+            color: #333;
+            line-height: 1.6;
         }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
         .section {
-            margin-bottom: 30px;
-            padding: 20px;
+            margin-bottom: 20px;
+            padding: 15px;
             border-radius: 8px;
-            background-color: #f8f9fa;
+            background-color: white;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
         }
+        
+        h1 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        h2 {
+            color: var(--dark-color);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: #6e707e;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #d1d3e2;
+            border-radius: 0.35rem;
+            margin-bottom: 10px;
+        }
+        
+        .btn {
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            border-radius: 0.35rem;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        
+        .btn-primary {
+            color: #fff;
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-success {
+            color: #fff;
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+        }
+        
         .food-item, .person-item {
             margin: 10px 0;
-            padding: 10px;
+            padding: 12px 15px;
             background: white;
             border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 0.15rem 0.5rem rgba(0, 0, 0, 0.05);
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .result-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fc;
+            border-radius: 5px;
+            border-left: 3px solid var(--success-color);
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 0 10px;
+            }
+            
+            .section {
+                padding: 12px;
+                margin-bottom: 15px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+                margin-bottom: 1.2rem;
+            }
+            
+            h2 {
+                font-size: 1.2rem;
+            }
+            
+            .btn {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .food-item, .person-item {
+                padding: 10px 12px;
+                font-size: 0.95rem;
+            }
+        }
+        
+        /* Hide banners on mobile */
+        @media (max-width: 992px) {
+            .position-fixed {
+                display: none !important;
+            }
+            
+            .container {
+                width: 100%;
+                max-width: 100%;
+                padding: 0 10px;
+            }
         }
     </style>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- แบนเนอร์ด้านซ้าย (โหลดผ่าน iframe) -->
+    <!-- แบนเนอร์ด้านซ้าย (โหลดผ่าน iframe) - ซ่อนบนมือถือ -->
     <div class="position-fixed start-0 top-0 h-100 d-none d-lg-block" style="width: 180px; z-index: 1000; left: 0;">
         <iframe src="/banner/left" frameborder="0" style="width: 180px; height: 100%; border: none;"></iframe>
     </div>
 
     <!-- เนื้อหาหลัก -->
-    <div class="container" style="max-width: 1200px; margin: 0 auto; position: relative; z-index: 1;">
+    <div class="container">
         <h1 class="text-center mb-4">❌ Guไม่หารนะ ❌</h1>
         
         <!-- ส่วนเพิ่มเมนูอาหาร -->
@@ -89,7 +228,7 @@
         </div>
     </div>
 
-    <!-- แบนเนอร์ด้านขวา (โหลดผ่าน iframe) -->
+    <!-- แบนเนอร์ด้านขวา (โหลดผ่าน iframe) - ซ่อนบนมือถือ -->
     <div class="position-fixed end-0 top-0 h-100 d-none d-lg-block" style="width: 180px; z-index: 1000; right: 0;">
         <iframe src="/banner/right" frameborder="0" style="width: 180px; height: 100%; border: none;"></iframe>
     </div>
@@ -97,14 +236,38 @@
     <script>
         let foods = [];
         let people = [];
+        
+        // ฟังก์ชันโหลดข้อมูลเริ่มต้น
+        function loadInitialData() {
+            // โหลดรายการอาหาร
+            fetch('/calculate')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // อัปเดตรายการอาหาร
+                        foods = data.foods || [];
+                        // อัปเดตรายชื่อคน
+                        if (data.people) {
+                            people = data.people.map(person => ({
+                                ...person,
+                                foods_selected: person.foods_selected || []
+                            }));
+                        }
+                        updateFoodList();
+                        updatePeopleList();
+                        updateFoodSelection();
+                    }
+                })
+                .catch(error => console.error('Error loading initial data:', error));
+        }
 
         // เพิ่มอาหาร
         function addFood() {
             const name = document.getElementById('foodName').value;
             const price = parseFloat(document.getElementById('foodPrice').value);
             
-            if (!name || isNaN(price)) {
-                alert('กรุณากรอกข้อมูลให้ครบถ้วน');
+            if (!name || isNaN(price) || price <= 0) {
+                alert('กรุณากรอกชื่ออาหารและราคาให้ถูกต้อง');
                 return;
             }
 
@@ -113,15 +276,32 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name, price })
+                body: JSON.stringify({ 
+                    name: name.trim(), 
+                    price: price 
+                })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw err; });
+                }
+                return response.json();
+            })
             .then(data => {
-                foods = data.foods;
-                updateFoodList();
-                updateFoodSelection();
-                document.getElementById('foodName').value = '';
-                document.getElementById('foodPrice').value = '';
+                if (data.success) {
+                    // เพิ่มอาหารใหม่ลงในรายการ
+                    foods.push(data.food);
+                    updateFoodList();
+                    updateFoodSelection();
+                    document.getElementById('foodName').value = '';
+                    document.getElementById('foodPrice').value = '';
+                } else {
+                    alert(data.error || 'เกิดข้อผิดพลาดในการเพิ่มอาหาร');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(error.error || 'เกิดข้อผิดพลาดในการเชื่อมต่อ');
             });
         }
 
@@ -130,7 +310,7 @@
         function addPerson() {
             const name = document.getElementById('personName').value;
             
-            if (!name) {
+            if (!name.trim()) {
                 alert('กรุณากรอกชื่อ');
                 return;
             }
@@ -140,14 +320,30 @@
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ name })
+                body: JSON.stringify({ 
+                    name: name.trim() 
+                })
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw err; });
+                }
+                return response.json();
+            })
             .then(data => {
-                people = data.people;
-                updatePeopleList();
-                updateFoodSelection();
-                document.getElementById('personName').value = '';
+                if (data.success) {
+                    // เพิ่มคนใหม่ลงในรายการ
+                    people.push(data.person);
+                    updatePeopleList();
+                    updateFoodSelection();
+                    document.getElementById('personName').value = '';
+                } else {
+                    alert(data.error || 'เกิดข้อผิดพลาดในการเพิ่มคน');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert(error.error || 'เกิดข้อผิดพลาดในการเชื่อมต่อ');
             });
         }
 
@@ -157,23 +353,19 @@
             foodList.innerHTML = '';
             
             if (foods.length === 0) {
-                foodList.innerHTML = '<p>ยังไม่มีรายการอาหาร</p>';
+                foodList.innerHTML = '<p class="text-muted">ยังไม่มีรายการอาหาร</p>';
                 return;
             }
             
-            const list = document.createElement('div');
-            list.className = 'list-group';
-            
             foods.forEach(food => {
-                const item = document.createElement('div');
-                item.className = 'list-group-item d-flex justify-content-between align-items-center';
-                item.innerHTML = `
-                    <span>${food.name} - ฿${food.price.toFixed(2)}</span>
+                const foodItem = document.createElement('div');
+                foodItem.className = 'food-item';
+                foodItem.innerHTML = `
+                    <strong>${food.name}</strong>
+                    <span class="float-end">${food.price.toFixed(2)} บาท</span>
                 `;
-                list.appendChild(item);
+                foodList.appendChild(foodItem);
             });
-            
-            foodList.appendChild(list);
         }
 
         // อัปเดตรายชื่อคน
@@ -182,23 +374,19 @@
             peopleList.innerHTML = '';
             
             if (people.length === 0) {
-                peopleList.innerHTML = '<p>ยังไม่มีรายชื่อคน</p>';
+                peopleList.innerHTML = '<p class="text-muted">ยังไม่มีรายชื่อคน</p>';
                 return;
             }
             
-            const list = document.createElement('div');
-            list.className = 'list-group';
-            
             people.forEach(person => {
-                const item = document.createElement('div');
-                item.className = 'list-group-item';
-                item.textContent = person.name;
-                list.appendChild(item);
+                const personItem = document.createElement('div');
+                personItem.className = 'person-item';
+                personItem.innerHTML = `
+                    <strong>${person.name}</strong>
+                `;
+                peopleList.appendChild(personItem);
             });
-            
-            peopleList.appendChild(list);
         }
-
 
         // อัปเดตส่วนเลือกอาหาร
         function updateFoodSelection() {
@@ -206,64 +394,64 @@
             foodSelection.innerHTML = '';
             
             if (people.length === 0 || foods.length === 0) {
-                foodSelection.innerHTML = '<p>กรุณาเพิ่มรายการอาหารและคนก่อน</p>';
+                foodSelection.innerHTML = '<p class="text-muted">กรุณาเพิ่มคนและอาหารก่อน</p>';
                 return;
             }
             
             people.forEach(person => {
-                const card = document.createElement('div');
-                card.className = 'card mb-3';
-                
-                const cardHeader = document.createElement('div');
-                cardHeader.className = 'card-header';
-                cardHeader.textContent = `เลือกอาหารสำหรับ: ${person.name}`;
-                
-                const cardBody = document.createElement('div');
-                cardBody.className = 'card-body';
-                
-                foods.forEach(food => {
-                    const div = document.createElement('div');
-                    div.className = 'form-check';
+                const personSection = document.createElement('div');
+                personSection.className = 'mb-4';
+                personSection.innerHTML = `
+                    <h4>${person.name}</h4>
+                    <div class="row" id="food-selection-${person.id}">
+                        ${foods.map(food => `
+                            <div class="col-md-4 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input food-checkbox" 
+                                           type="checkbox" 
+                                           value="${food.id}" 
+                                           data-person-id="${person.id}"
+                                           ${person.foods_selected && person.foods_selected.includes(food.id) ? 'checked' : ''}>
+                                    <label class="form-check-label">
+                                        ${food.name} (${food.price.toFixed(2)} บาท)
+                                    </label>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+                foodSelection.appendChild(personSection);
+            });
+            
+            // เพิ่ม event listener สำหรับ checkbox
+            document.querySelectorAll('.food-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const personId = this.getAttribute('data-person-id');
+                    const foodId = this.value;
                     
-                    const checkbox = document.createElement('input');
-                    checkbox.type = 'checkbox';
-                    checkbox.className = 'form-check-input';
-                    checkbox.value = food.id;
-                    checkbox.id = `person-${person.id}-food-${food.id}`;
+                    const person = people.find(p => p.id === personId);
+                    if (!person) return;
                     
-                    // ตรวจสอบว่าอาหารนี้ถูกเลือกไว้แล้วหรือไม่
-                    if (person.foods_selected && person.foods_selected.includes(food.id)) {
-                        checkbox.checked = true;
+                    // อัปเดตรายการอาหารที่เลือกในเบื้องต้นเพื่อให้ผู้ใช้เห็นการเปลี่ยนแปลงทันที
+                    if (this.checked) {
+                        if (!person.foods_selected) person.foods_selected = [];
+                        if (!person.foods_selected.includes(foodId)) {
+                            person.foods_selected.push(foodId);
+                        }
+                    } else {
+                        person.foods_selected = person.foods_selected ? person.foods_selected.filter(id => id !== foodId) : [];
                     }
                     
-                    checkbox.addEventListener('change', () => updatePersonFoods(person.id));
-                    
-                    const label = document.createElement('label');
-                    label.className = 'form-check-label';
-                    label.htmlFor = `person-${person.id}-food-${food.id}`;
-                    label.textContent = `${food.name} (฿${food.price.toFixed(2)})`;
-                    
-                    div.appendChild(checkbox);
-                    div.appendChild(label);
-                    cardBody.appendChild(div);
+                    // อัปเดตข้อมูลในเซิร์ฟเวอร์
+                    updatePersonFoods(personId);
                 });
-                
-                card.appendChild(cardHeader);
-                card.appendChild(cardBody);
-                foodSelection.appendChild(card);
             });
         }
 
         // อัปเดตอาหารที่คนเลือก
         function updatePersonFoods(personId) {
-            const checkboxes = document.querySelectorAll(`input[type="checkbox"][id^="person-${personId}-"]`);
-            const selectedFoods = [];
-            
-            checkboxes.forEach(checkbox => {
-                if (checkbox.checked) {
-                    selectedFoods.push(parseInt(checkbox.value));
-                }
-            });
+            const person = people.find(p => p.id === personId);
+            if (!person) return;
             
             fetch('/select_food', {
                 method: 'POST',
@@ -272,8 +460,26 @@
                 },
                 body: JSON.stringify({
                     person_id: personId,
-                    food_ids: selectedFoods
+                    food_ids: person.foods_selected || []
                 })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw err; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (!data.success) {
+                    console.error('Failed to update food selection:', data.error);
+                    // รีโหลดข้อมูลเพื่อให้สอดคล้องกับเซิร์ฟเวอร์
+                    loadInitialData();
+                }
+            })
+            .catch(error => {
+                console.error('Error updating food selection:', error);
+                // รีโหลดข้อมูลเพื่อให้สอดคล้องกับเซิร์ฟเวอร์
+                loadInitialData();
             });
         }
 
@@ -282,131 +488,141 @@
             fetch('/calculate')
                 .then(response => response.json())
                 .then(data => {
-                    const resultDiv = document.getElementById('result');
-                    resultDiv.innerHTML = '';
-                    
-                    if (!data.people || data.people.length === 0) {
-                        resultDiv.innerHTML = '<p>ไม่พบข้อมูลการคำนวณ</p>';
-                        return;
+                    if (data.success) {
+                        displayResults(data.people, data.total_all_foods, data.calculated_total);
+                    } else {
+                        document.getElementById('result').innerHTML = `
+                            <div class="alert alert-danger">
+                                เกิดข้อผิดพลาด: ${data.error || 'ไม่สามารถคำนวณผลลัพธ์ได้'}
+                            </div>`;
                     }
-                    
-                    // สร้างตารางสรุปยอดรวม
-                    const summaryTable = document.createElement('table');
-                    summaryTable.className = 'table table-bordered mb-4';
-                    
-                    const summaryThead = document.createElement('thead');
-                    summaryThead.innerHTML = `
-                        <tr class="table-primary">
-                            <th colspan="2" class="text-center">สรุปรวมค่าอาหารทั้งหมด</th>
-                        </tr>
-                        <tr>
-                            <th>รายการ</th>
-                            <th class="text-end">จำนวนเงิน</th>
-                        </tr>
-                    `;
-                    
-                    const summaryTbody = document.createElement('tbody');
-                    
-                    // แสดงยอดรวมค่าอาหารทั้งหมด
-                    const totalFoodsRow = document.createElement('tr');
-                    totalFoodsRow.innerHTML = `
-                        <td>ยอดรวมค่าอาหารทั้งหมด</td>
-                        <td class="text-end">฿${data.total_all_foods.toFixed(2)}</td>
-                    `;
-                    summaryTbody.appendChild(totalFoodsRow);
-                    
-                    // แสดงยอดรวมที่คำนวณได้ (ควรเท่ากับยอดรวมอาหารทั้งหมด)
-                    const calculatedTotalRow = document.createElement('tr');
-                    calculatedTotalRow.innerHTML = `
-                        <td>ยอดรวมที่คำนวณได้</td>
-                        <td class="text-end">฿${data.calculated_total.toFixed(2)}</td>
-                    `;
-                    summaryTbody.appendChild(calculatedTotalRow);
-                    
-                    summaryTable.appendChild(summaryThead);
-                    summaryTable.appendChild(summaryTbody);
-                    resultDiv.appendChild(summaryTable);
-                    
-                    // สร้างตารางแสดงรายละเอียดการคำนวณของแต่ละคน
-                    data.people.forEach(person => {
-                        const personCard = document.createElement('div');
-                        personCard.className = 'card mb-4';
-                        
-                        const cardHeader = document.createElement('div');
-                        cardHeader.className = 'card-header bg-light';
-                        cardHeader.innerHTML = `<h5 class="mb-0">${person.name} - รวมทั้งสิ้น ฿${person.total.toFixed(2)}</h5>`;
-                        
-                        const cardBody = document.createElement('div');
-                        cardBody.className = 'card-body';
-                        
-                        if (person.foods && person.foods.length > 0) {
-                            const table = document.createElement('table');
-                            table.className = 'table table-sm';
-                            
-                            const thead = document.createElement('thead');
-                            thead.innerHTML = `
-                                <tr>
-                                    <th>รายการอาหาร</th>
-                                    <th class="text-end">ราคา</th>
-                                    <th class="text-center">จำนวนคนที่แบ่ง</th>
-                                    <th class="text-end">จ่ายคนละ</th>
-                                </tr>
-                            `;
-                            
-                            const tbody = document.createElement('tbody');
-                            
-                            person.foods.forEach(food => {
-                                const row = document.createElement('tr');
-                                row.innerHTML = `
-                                    <td>${food.name}</td>
-                                    <td class="text-end">฿${food.price.toFixed(2)}</td>
-                                    <td class="text-center">${food.share_count} คน</td>
-                                    <td class="text-end">฿${food.share_amount.toFixed(2)}</td>
-                                `;
-                                tbody.appendChild(row);
-                            });
-                            
-                            const totalRow = document.createElement('tr');
-                            totalRow.className = 'table-active fw-bold';
-                            totalRow.innerHTML = `
-                                <td colspan="3" class="text-end">รวมทั้งหมด:</td>
-                                <td class="text-end">฿${person.total.toFixed(2)}</td>
-                            `;
-                            tbody.appendChild(totalRow);
-                            
-                            table.appendChild(thead);
-                            table.appendChild(tbody);
-                            cardBody.appendChild(table);
-                        } else {
-                            cardBody.innerHTML = '<p class="mb-0">ไม่พบรายการอาหารที่เลือก</p>';
-                        }
-                        
-                        personCard.appendChild(cardHeader);
-                        personCard.appendChild(cardBody);
-                        resultDiv.appendChild(personCard);
-                    });
                 })
                 .catch(error => {
-                    console.error('Error calculating:', error);
-                    const resultDiv = document.getElementById('result');
-                    resultDiv.innerHTML = `<div class="alert alert-danger">เกิดข้อผิดพลาดในการคำนวณ: ${error.message}</div>`;
+                    console.error('Error calculating results:', error);
+                    document.getElementById('result').innerHTML = `
+                        <div class="alert alert-danger">
+                            เกิดข้อผิดพลาดในการเชื่อมต่อ: ${error.message || 'ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้'}
+                        </div>`;
                 });
         }
 
-        // โหลดข้อมูลเริ่มต้น
-        function loadInitialData() {
-            fetch('/calculate')
-                .then(response => response.json())
-                .then(data => {
-                    if (data.length > 0) {
-                        calculate();
-                    }
-                });
+        // แสดงผลลัพธ์
+        function displayResults(people, totalAllFoods, calculatedTotal) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = '';
+            
+            if (!people || people.length === 0) {
+                resultDiv.innerHTML = '<p>ไม่พบข้อมูลการคำนวณ</p>';
+                return;
+            }
+            
+            // สร้างตารางสรุปยอดรวม
+            const summaryTable = document.createElement('table');
+            summaryTable.className = 'table table-bordered mb-4';
+            
+            const summaryThead = document.createElement('thead');
+            summaryThead.innerHTML = `
+                <tr class="table-primary">
+                    <th colspan="2" class="text-center">สรุปรวมค่าอาหารทั้งหมด</th>
+                </tr>
+                <tr>
+                    <th>รายการ</th>
+                    <th class="text-end">จำนวนเงิน</th>
+                </tr>
+            `;
+            
+            const summaryTbody = document.createElement('tbody');
+            
+            // แสดงยอดรวมค่าอาหารทั้งหมด
+            const totalFoodsRow = document.createElement('tr');
+            totalFoodsRow.innerHTML = `
+                <td>ยอดรวมค่าอาหารทั้งหมด</td>
+                <td class="text-end">฿${totalAllFoods.toFixed(2)}</td>
+            `;
+            summaryTbody.appendChild(totalFoodsRow);
+            
+            // แสดงยอดรวมที่คำนวณได้ (ควรเท่ากับยอดรวมอาหารทั้งหมด)
+            const calculatedTotalRow = document.createElement('tr');
+            calculatedTotalRow.innerHTML = `
+                <td>ยอดรวมที่คำนวณได้</td>
+                <td class="text-end">฿${calculatedTotal.toFixed(2)}</td>
+            `;
+            summaryTbody.appendChild(calculatedTotalRow);
+            
+            summaryTable.appendChild(summaryThead);
+            summaryTable.appendChild(summaryTbody);
+            resultDiv.appendChild(summaryTable);
+            
+            // สร้างตารางแสดงรายละเอียดการคำนวณของแต่ละคน
+            people.forEach(person => {
+                const personCard = document.createElement('div');
+                personCard.className = 'card mb-4';
+                
+                const cardHeader = document.createElement('div');
+                cardHeader.className = 'card-header bg-light';
+                cardHeader.innerHTML = `<h5 class="mb-0">${person.name} - รวมทั้งสิ้น ฿${person.total.toFixed(2)}</h5>`;
+                
+                const cardBody = document.createElement('div');
+                cardBody.className = 'card-body';
+                
+                if (person.foods && person.foods.length > 0) {
+                    const table = document.createElement('table');
+                    table.className = 'table table-sm';
+                    
+                    const thead = document.createElement('thead');
+                    thead.innerHTML = `
+                        <tr>
+                            <th>รายการอาหาร</th>
+                            <th class="text-end">ราคา</th>
+                            <th class="text-center">จำนวนคนที่แบ่ง</th>
+                            <th class="text-end">จ่ายคนละ</th>
+                        </tr>
+                    `;
+                    
+                    const tbody = document.createElement('tbody');
+                    
+                    person.foods.forEach(food => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${food.name}</td>
+                            <td class="text-end">฿${food.price.toFixed(2)}</td>
+                            <td class="text-center">${food.share_count} คน</td>
+                            <td class="text-end">฿${food.share_amount.toFixed(2)}</td>
+                        `;
+                        tbody.appendChild(row);
+                    });
+                    
+                    const totalRow = document.createElement('tr');
+                    totalRow.className = 'table-active fw-bold';
+                    totalRow.innerHTML = `
+                        <td colspan="3" class="text-end">รวมทั้งหมด:</td>
+                        <td class="text-end">฿${person.total.toFixed(2)}</td>
+                    `;
+                    tbody.appendChild(totalRow);
+                    
+                    table.appendChild(thead);
+                    table.appendChild(tbody);
+                    cardBody.appendChild(table);
+                } else {
+                    cardBody.innerHTML = '<p class="mb-0">ไม่พบรายการอาหารที่เลือก</p>';
+                }
+                
+                personCard.appendChild(cardHeader);
+                personCard.appendChild(cardBody);
+                resultDiv.appendChild(personCard);
+            });
         }
 
         // โหลดข้อมูลเมื่อหน้าเว็บโหลดเสร็จ
         document.addEventListener('DOMContentLoaded', () => {
             console.log('Application loaded');
+            loadInitialData();
+            
+            // เพิ่ม event listener สำหรับปุ่มคำนวณ
+            const calculateBtn = document.querySelector('button[onclick="calculate()"]');
+            if (calculateBtn) {
+                calculateBtn.addEventListener('click', calculate);
+            }
         });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
